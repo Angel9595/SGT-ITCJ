@@ -12,13 +12,13 @@
     <h1>PROGRAMA INSTITUCIONAL DE TUTORÍAS</h1>
   </div>
   <div class="header">
-    <p>FECHA <input matInput></p>
-    <p>DEPARTAMENTO: <input matInput></p>
-    <p>HORARIO DE TUTORÍA: <input matInput></p>
-    <p>SEMESTRE DE INGRESO: <input matInput></p>
-    <p>CARRERA: <input matInput></p>
-    <p>CLAVE Y GRUPO: <input matInput></p>
-    <p>NOMBRE DEL TUTOR: <input matInput></p>
+    <p>FECHA: <mat-form-field ><input matInput></mat-form-field></p>
+    <p>DEPARTAMENTO:<mat-form-field ><input matInput></mat-form-field></p>
+    <p>HORARIO DE TUTORÍA: <mat-form-field ><input matInput></mat-form-field></p>
+    <p>SEMESTRE DE INGRESO: <mat-form-field ><input matInput></mat-form-field></p>
+    <p>CARRERA: <mat-form-field ><input matInput></mat-form-field></p>
+    <p>CLAVE Y GRUPO:<mat-form-field ><input matInput></mat-form-field> </p>
+    <p>NOMBRE DEL TUTOR:<mat-form-field ><input matInput></mat-form-field> </p>
   </div>
 
 <table mat-table [dataSource]="dataSource">
@@ -48,7 +48,12 @@
 
   <ng-container matColumnDef="ADA">
     <th mat-header-cell *matHeaderCellDef [title]="columnDescriptions['ADA']">ADA</th>
-    <td mat-cell *matCellDef="let element"> <input matInput [(ngModel)]="element.ADA"> </td>
+    <td mat-cell *matCellDef="let element"> 
+
+      <input matInput [(ngModel)]="element.ADA">
+ 
+
+     </td>
   </ng-container>
 
   <ng-container matColumnDef="BDA">

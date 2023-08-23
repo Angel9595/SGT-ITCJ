@@ -1,0 +1,164 @@
+<ng-container *ngIf="dialogRef">
+    <div class="pdf-container">
+    <h2 mat-dialog-title class="highlighted-title">Entrevista a Tutorado</h2>
+    <mat-dialog-content>
+        <div class="info-group">
+            <h3 class="title">Informacion Complementaria</h3>
+            <div class="info-row">
+                <div class="info-item">
+                    <span class="label">Con quien se siente mas mas ligado afectiva-mente: </span>
+                    <span>{{ interview.ligadoafectivamente }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Menciona por que te sientes mas ligado afectiva: </span>
+                    <span>{{ interview.Descripciondeligadoafectivamente }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Quién se ocupa más directamente de su educación: </span>
+                    <span>{{ interview.masocupadoeducacion }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Quién ha influido más directamente en su decisión para estudiar esta carrera: </span>
+                    <span>{{ interview.infuidoencarrera }}</span>
+                </div>
+                <!-- <div class="info-item">
+                    <span class="label">Cómo es su relación con los compañeros: </span>
+                    <span>{{ interview.Relacionconcompaneros }}</span>
+                </div> -->
+                <!-- <div class="info-item">
+                    <span class="label">Menciona por que es tu relación de la forma en relación con los compañeros: </span>
+                    <span>{{ interview.Descripcionrelacioncompañeros }}</span>
+                </div> -->
+                <div class="info-item">
+                    <span class="label">Tiene pareja: </span>
+                    <span>{{ interview.Tenerpareja }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Como es tu relacion con tu pareja: </span>
+                    <span>{{ interview.Descripcionrelacion }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Cómo es su relación con sus profesores: </span>
+                    <span>{{ interview.Relacionconprofesores }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Cómo es tu relación con las autoridades académicas: </span>
+                    <span>{{ interview.Relacionconautoridadesacademicas }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Qué hace en su tiempo libre: </span>
+                    <span>{{ interview.tiempolibre }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Cuál es tu actividad recreativa: </span>
+                    <span>{{ interview.actividadrecreativa }}</span>
+                </div>
+            </div>
+
+                <!-- CARACTERÍSTICAS PERSONALES (MADUREZ Y EQUILIBRIO) -->
+<!-- <h3 class="title">Características Personales (Madurez y Equilibrio)</h3>
+<div class="info-row">
+    <div class="info-item" *ngFor="let key of objectKeys(interview.comportamientoUsuario)">
+        <span class="label">{{ key }}: </span>
+        <span>{{ interview.comportamientoUsuario[key] }}</span>
+        <span>{{ interview.comportamientoUsuario['AGRESIV@'] }}</span>
+
+    </div>
+</div> -->
+
+<!-- ÁREA PSICO - PEDAGÓGICA -->
+<h3 class="title">Área Psico - Pedagógica</h3>
+<div class="info-row">
+    <!-- <div class="info-item">
+        <span class="label">Cómo le gustaría ser: </span>
+        <span>{{ interview.Cómotegustaríaser}}</span>
+    </div> -->
+    <div class="info-item">
+        <span class="label">Recibes ayuda en tu casa para la realización de tareas escolares?: </span>
+        <span>{{ interview.Ayudacontarea }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Qué problemas personales intervienen en tus estudios?: </span>
+        <span>{{ interview.intervencionConestudios }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Cuál es tu rendimiento escolar?: </span>
+        <span>{{ interview.rendimientoEscolar }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Menciona las asignaturas que cursas en el semestre actual.: </span>
+        <span>{{ interview.materiasActuales }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Cuál es tu asignatura preferida?: </span>
+        <span>{{ interview.asignaturaPreferida }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">cuál es la asignatura en la que sobresales?: </span>
+        <span>{{ interview.asignaturaSobresaliente }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Qué asignatura te desagrada?   Por qué?: </span>
+        <span>{{ interview.asignaturaDesagradable }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Cuál es tu asignatura con más bajo promedio del semestre anterior?  Por qué?: </span>
+        <span>{{ interview.asignaturaBajoPromedio }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Por qué vienes al tecnológico?: </span>
+        <span>{{ interview.porquevienesalTEC }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Qué te motiva a venir al Tecnológico?: </span>
+        <span>{{ interview.motivacionAsistiralTec }}</span>
+    </div>
+</div>
+
+<!-- PLAN DE VIDA Y CARRERA -->
+<h3 class="title">Plan de Vida y Carrera</h3>
+<div class="info-row">
+    <div class="info-item">
+        <span class="label">Cuáles son tus planes inmediatos: </span>
+        <span>{{ interview.planesinmediatos }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Cuáles son tus metas en la vida: </span>
+        <span>{{ interview.metasenlavida }}</span>
+    </div>
+</div>
+
+<!-- CARACTERÍSTICAS PERSONALES -->
+<h3 class="title">Características Personales</h3>
+<div class="info-row">
+    <div class="info-item">
+        <span class="label">Yo soy: </span>
+        <span>{{ interview.YoSoy }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Mi carácter es: </span>
+        <span>{{ interview.Micaracteres }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">A mí me gusta que: </span>
+        <span>{{ interview.Megustaque }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Yo aspiro en la vida: </span>
+        <span>{{ interview.yoAspiroenlavida }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">Yo tengo miedo que: </span>
+        <span>{{ interview.Yotengomiedoque }}</span>
+    </div>
+    <div class="info-item">
+        <span class="label">comentario adicional?: </span>
+        <span>{{ interview.comentarioadicional }}</span>
+    </div>
+</div>
+
+        <button mat-button style="width: 100%;" (click)="printPDF()">Imprimir Informacion<mat-icon>picture_as_pdf</mat-icon></button>
+
+    <mat-dialog-actions>
+        <button class="close-button" mat-raised-button color="warn" (click)="dialogRef.close()">Cerrar</button>
+    </mat-dialog-actions>

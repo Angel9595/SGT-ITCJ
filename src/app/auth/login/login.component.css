@@ -1,8 +1,10 @@
 .center-content {
-  margin-top: 100px;
-  display:flex;
+  height: 100vh;  /* This will take the full viewport height */
+  display: flex;
   justify-content: center;
+  align-items: center;  /* This will vertically align the spinner to center */
 }
+
 
 .example-card {
   max-width: 400px;

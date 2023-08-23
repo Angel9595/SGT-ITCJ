@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/app/models/user';
 import {PackageI} from 'src/app/models/packages';
@@ -45,13 +45,17 @@ export class AlertSummaryComponent  {
     'DISCAPACIDAD': 'ALUMNO TIENE ALGUNA DISCAPACIDAD'
   }
 
-  constructor(private afs: AngularFirestore, private fichaTecnicaService:FichaTecnicaService ) {
+  constructor(private afs: AngularFirestore, private fichaTecnicaService:FichaTecnicaService,private cdRef: ChangeDetectorRef ) {
     firebase.auth().onAuthStateChanged((user:any) => {
       this.currentUser = user as User;
       this.loadPackages();
     });
    }
 
+
+   ngAfterViewInit() {
+    this.cdRef.detectChanges();
+}
 
    private loadPackages() {
     if (!this.currentUser) {
@@ -60,6 +64,9 @@ export class AlertSummaryComponent  {
    }
 
    ngOnInit(): void {
+
+    this.cdRef.detectChanges();
+
     if (this.currentUser) {
       this.afs
         .collection<PackageI>('packages', (ref) => ref.where('TutorAsignado', '==', this.currentUser!.uid))
@@ -143,7 +150,7 @@ getInterviewForTutorado(interviewID: string): void {
 generatePDF() {
   const doc = new jsPDF();
 
-  // Título y encabezados
+  
   doc.setFontSize(18);
   doc.text("RESUMEN DE ALERTAS", 10, 20);
   doc.setFontSize(16);
@@ -151,25 +158,25 @@ generatePDF() {
   doc.text("PROGRAMA INSTITUCIONAL DE TUTORÍAS", 10, 40);
   
 
-  const fechaElement = document.querySelector("p input[matInput]:nth-child(1)") as HTMLInputElement;
+  const fechaElement = document.querySelector("p:nth-of-type(1) mat-form-field input[matInput]") as HTMLInputElement;
   const fecha = fechaElement ? fechaElement.value : 'No se ingreso';
   
-  const departamentoElement = document.querySelector("p input[matInput]:nth-child(2)") as HTMLInputElement;
+  const departamentoElement = document.querySelector(" p:nth-of-type(2) mat-form-field input[matInput]") as HTMLInputElement;
   const departamento = departamentoElement ? departamentoElement.value : 'No se ingreso';
 
-  const horariodeTutoriaElement = document.querySelector("p input[matInput]:nth-child(3)") as HTMLInputElement;
+  const horariodeTutoriaElement = document.querySelector(" p:nth-of-type(2) mat-form-field input[matInput]") as HTMLInputElement;
   const horario = horariodeTutoriaElement ? horariodeTutoriaElement.value : 'No se ingreso';
 
-  const semestredeingresoElement = document.querySelector("p input[matInput]:nth-child(4)") as HTMLInputElement;
+  const semestredeingresoElement = document.querySelector(" p:nth-of-type(3) mat-form-field input[matInput]") as HTMLInputElement;
   const semestre = semestredeingresoElement ? semestredeingresoElement.value : 'No se ingreso';
 
-  const carreraElement = document.querySelector("p input[matInput]:nth-child(5)") as HTMLInputElement;
+  const carreraElement = document.querySelector(" p:nth-of-type(4) mat-form-field input[matInput]") as HTMLInputElement;
   const carrera = carreraElement ? carreraElement.value : 'No se ingreso';
 
-  const claveygrupoElement = document.querySelector("p input[matInput]:nth-child(6)") as HTMLInputElement;
+  const claveygrupoElement = document.querySelector(" p:nth-of-type(5) mat-form-field input[matInput]") as HTMLInputElement;
   const claveygrupo = claveygrupoElement ? claveygrupoElement.value : 'No se ingreso';
   
-  const nombretutorElement = document.querySelector("p input[matInput]:nth-child(7)") as HTMLInputElement;
+  const nombretutorElement = document.querySelector(" p:nth-of-type(6) mat-form-field input[matInput]") as HTMLInputElement;
   const nombretutor = nombretutorElement ? nombretutorElement.value : 'No se ingreso';
  
 
@@ -182,9 +189,7 @@ generatePDF() {
   doc.text(`Clave y Grupo: ${claveygrupo}`, 100, 70);
   doc.text(`Nombre Tutor: ${nombretutor}`, 65, 90);
 
-  // ... Añade los otros campos aquí
 
-  // Crear tabla con los datos
   const headers = ["NOMBRE", "#CONTROL", "EN$", "N$", "ADA", "BDA", "SM", "AE", "PSICOLOGIA", "DROGAS", "DISCAPACIDAD"];
   const data = this.dataSource.data.map((item:any) => [
     item.name, item.Ncontrol, item['EN$'], item['N$'], item.ADA, item.BDA, item.SM, item.AE, item.PSICOLOGIA, item.DROGAS, item.DISCAPACIDAD
@@ -196,7 +201,7 @@ generatePDF() {
     body: data
   });
 
-  // Guardar el PDF
+  
   doc.save("Reporte-De-Resumen-Alertas.pdf");
 }
 

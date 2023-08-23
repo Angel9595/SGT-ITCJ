@@ -6,10 +6,13 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { FichaTecnica } from 'src/app/models/ficha-tecnica';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FichaTecnicaDialogComponent } from '../ficha-tecnica-dialog/ficha-tecnica-dialog.component';
 import { UserFirebaseService } from 'src/app/services/user-firebase.service';
 import { FichaTecnicaService } from 'src/app/services/tab-identifiation-tutored.service';
+import { interviewTutoredI } from 'src/app/models/interview-tutored';
+import { InterviewDialogComponent } from '../interview-dialog/interview-dialog.component';
+import { Subscription } from 'rxjs';
 
 
 
@@ -28,12 +31,18 @@ export class PackageTutorComponent implements OnInit {
   publicados: { [packageId: string]: boolean } = {};
   tutoradospkg = [];
   fichatecnicauserId!:string;
+  interviewuserId!:string;
   selectedUserUid!: string;
   selectedFichaTecnica: FichaTecnica | null = null;
   temporaryKeys: { [packageId: string]: string } = {};
   loadingPackages: boolean = true; 
   infotutor:any
   infoficha:any
+  infointerview:any
+
+   subscription4!: Subscription;
+   subscription3!: Subscription;
+  
 
 
   saveKeyAuthorizationedit(paquete: any) {
@@ -281,39 +290,85 @@ this.afAuth.authState.subscribe(user => {
     doc.save(`Reporte_Grupal_${paquete.nombrePaquete}.pdf`);
   }
   
- 
+  private subscription1!: Subscription;
+  private subscription2!: Subscription;
+   
+  
+  
 
-getFichaTecnica(uid: string): void {
-  this.firestore.collection('users').doc(uid).get().subscribe((doc) => {
-    
-    if (doc.exists) {
-      const data = doc.data() as any;
-      if (data.fichaTecnica) {
-        this.fichatecnicauserId = data.fichaTecnica;
-
-        // console.log(this.fichatecnicauserId);
-
-      this.fichatecnicaservice.getFichaTecnica(this.fichatecnicauserId).subscribe(fichaTecnicaInfo =>{
-        // console.log(fichaTecnicaInfo)
-        this.infoficha = fichaTecnicaInfo
-        this.openFichaTecnicaDialog(this.infoficha)
-        this.selectedFichaTecnica = this.infoficha;
-      })
-    
+  getFichaTecnica(uid: string): void {
+    this.subscription1 = this.firestore.collection('users').doc(uid).get().subscribe((doc) => {
+      if (doc.exists) {
+        const data = doc.data() as any;
+        if (data.fichaTecnica) {
+          this.fichatecnicauserId = data.fichaTecnica;
+  
+          this.subscription2 = this.fichatecnicaservice.getFichaTecnica(this.fichatecnicauserId).subscribe(fichaTecnicaInfo => {
+            this.infoficha = fichaTecnicaInfo;
+            const dialogRef = this.openFichaTecnicaDialog(this.infoficha);
+            this.selectedFichaTecnica = this.infoficha;
+  
+            dialogRef.afterClosed().subscribe(() => {
+              if (this.subscription2) {
+                this.subscription2.unsubscribe();
+              }
+            });
+          });
+        } else {
+          Notiflix.Notify.failure('Esta ventana no se puede mostrar porque el alumno no ha registrado sus datos socioeconómicos.');
+        }
       } else {
-        Notiflix.Notify.failure('Esta ventana no se puede mostrar porque el alumno no ha registrado sus datos socioeconómicos.');
+        console.log('No se encontró la ficha técnica del usuario.');
       }
-    } else {
-      // console.log('No se encontró la ficha técnica del usuario.');
-    }
-  });
-}
+    });
+  }
+  
 
-  openFichaTecnicaDialog(fichaTecnica: FichaTecnica): void {
-    this.dialog.open(FichaTecnicaDialogComponent, {
+  openFichaTecnicaDialog(fichaTecnica: FichaTecnica): MatDialogRef<FichaTecnicaDialogComponent, any> {
+    const dialogRef = this.dialog.open(FichaTecnicaDialogComponent, {
       width: '80%',
       data: fichaTecnica
     });
+    return dialogRef;
   }
+  
+
+
+  getinterviews(uid: string): void {
+    
+    this.subscription4 = this.firestore.collection('users').doc(uid).get().subscribe((doc) => {
+      if (doc.exists) {
+        const data = doc.data() as any;
+        if (data.interview) {
+          this.interviewuserId = data.interview;
+  
+          this.subscription3 = this.fichatecnicaservice.getInterviews(this.interviewuserId).subscribe(interviewInfo => {
+            this.infointerview = interviewInfo;
+            const dialogRef = this.openinterviewdialog(this.infointerview);
+            this.selectedFichaTecnica = this.infointerview;
+  
+            dialogRef.afterClosed().subscribe(() => {
+              if (this.subscription3) {
+                this.subscription3.unsubscribe();
+              }
+            });
+          });
+        } else {
+          Notiflix.Notify.failure('Esta ventana no se puede mostrar porque el alumno no ha registrado sus datos socioeconómicos.');
+        }
+      } else {
+        console.log('No se encontró la entrevista técnica del usuario.');
+      }
+    });
+  }
+  
+  openinterviewdialog(interview: interviewTutoredI): MatDialogRef<InterviewDialogComponent, any> {
+    const dialogRef = this.dialog.open(InterviewDialogComponent, {
+      width: '80%',
+      data: interview
+    });
+    return dialogRef;
+  }
+  
 
 }

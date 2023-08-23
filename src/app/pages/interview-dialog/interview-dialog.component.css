@@ -1,0 +1,51 @@
+.mat-dialog-content {
+    font-size: 14px;
+  }
+  
+  .info-group {
+    margin-bottom: 16px;
+  }
+  
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .info-row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .info-item {
+    flex: 1;
+    min-width: 50%;
+    margin-bottom: 8px;
+  }
+  
+  .label {
+    font-weight: bold;
+  }
+  
+  .close-button {
+    width: 100%;
+  }
+  
+  .highlighted-title {
+    color: #FFFFFF; 
+    text-align: center; 
+    background-color: #ff0000a1; 
+    padding: 10px; 
+    border-radius: 5px; 
+    font-size: 24px;
+  }
+
+  .title {
+    color:#ff0000a1; 
+    text-align: center; 
+    background-color:  #f0f0f0; 
+    padding: 5px; 
+    border-radius: 5px; 
+    font-size: 16px;
+  }
+  

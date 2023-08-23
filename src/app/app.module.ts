@@ -73,6 +73,7 @@ import { PackageOwnInformationComponent } from './pages/package-own-information/
 import { FichaTecnicaDialogComponent } from './pages/ficha-tecnica-dialog/ficha-tecnica-dialog.component';
 import { SocioEconomicStudyComponent } from './pages/tab-identifiation-tutored/socio-economic-study/socio-economic-study.component';
 import { TutoredInterviewComponent } from './pages/tab-identifiation-tutored/tutored-interview/tutored-interview.component';
+import { InterviewDialogComponent } from './pages/interview-dialog/interview-dialog.component';
 
 
 @NgModule({
@@ -105,6 +106,7 @@ import { TutoredInterviewComponent } from './pages/tab-identifiation-tutored/tut
     FichaTecnicaDialogComponent,
     SocioEconomicStudyComponent,
     TutoredInterviewComponent,
+    InterviewDialogComponent,
   
   ],
   imports: [
